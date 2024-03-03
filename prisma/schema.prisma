@@ -9,6 +9,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch","fullTextIndex"]
 }
 
 model Course {
@@ -31,6 +32,8 @@ purchases Purchase[]
  updatedAt DateTime @updatedAt
 
  @@index([categoryId])
+ 
+  @@map(name: "idx_title", expression: "USING gin(to_tsvector('english', title))")
 }
 
 model Category{

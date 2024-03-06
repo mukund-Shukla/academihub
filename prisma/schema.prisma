@@ -32,8 +32,6 @@ purchases Purchase[]
  updatedAt DateTime @updatedAt
 
  @@index([categoryId])
- 
-  @@map(name: "idx_title", expression: "USING gin(to_tsvector('english', title))")
 }
 
 model Category{
@@ -47,14 +45,11 @@ model Attachment{
   id String @id @default(uuid())
   name String
   url String @db.String
-
   courseId String
   course Course @relation(fields: [courseId],references: [id],onDelete: Cascade)
-
-      
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    @@index([courseId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  @@index([courseId])
 }
 
 model Chapter {
@@ -72,6 +67,7 @@ model Chapter {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@index([courseId])
+
 }
 
 model MuxData {
